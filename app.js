@@ -13,8 +13,9 @@ var express = require('express'),
     MongoStore = require('connect-mongo')(session);
 
 // path to the router
-var userRoutes = require('./routes/index');
-var adminRoutes = require('./routes/user');
+var routes = require('./routes/index');
+var userRoutes = require('./routes/user');
+var userAdmin = require('./routes/userAdmin');
 
 var app = express();
 
@@ -54,8 +55,9 @@ app.use(function(req, res, next){
 app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
-app.use('/', userRoutes);
-// app.use('/admin', adminRoutes);
+app.use('/', routes);
+app.use('/admin', userAdmin);
+app.use('/user', userRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

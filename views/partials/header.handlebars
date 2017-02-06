@@ -12,10 +12,10 @@
             <li>
                 <a href="/products">Products</a>
                 <ul class="menu vertical">
-                    <li><a class="category" data-category="body spray" href="#">Body Sprays</a></li>
-                    <li><a class="category" data-category="drinkable" href="#">Drinkables</a></li>
-                    <li><a class="category" data-category="air freshener" href="#">Air Fresheners</a></li>
-                    <li><a class="category" data-category="bathing" href="#">Bathing</a></li>
+                    <li class="is-dropdown-submenu-parent"><a class="category" data-category="body spray" href="#">Body Sprays</a></li>
+                    <li class="is-dropdown-submenu-parent"><a class="category" data-category="drinkable" href="#">Drinkables</a></li>
+                    <li class="is-dropdown-submenu-parent"><a class="category" data-category="air freshener" href="#">Air Fresheners</a></li>
+                    <li class="is-dropdown-submenu-parent"><a class="category" data-category="bathing" href="#">Bathing</a></li>
                 </ul>
             </li>
             <li><a href="/contact">Contact</a></li>
@@ -26,14 +26,37 @@
     
     <div class="top-bar-right">
         <ul class="dropdown menu">
-           <!--  <li><input id="searchField" type="search" placeholder="Search"></li>
-            <li><button id="searchButton" type="button" class="button">Search</button></li> -->
             <li>
                 <a href="/shopping-cart">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     Shopping Cart
                     <span class="badge">{{session.cart.totalQty}}</span>
                 </a>
+            </li>
+            <li>
+                <ul class="dropdown menu" data-dropdown-menu>
+                    <li class="is-dropdown-submenu-parent">
+                        <a href="#">User Management</a>
+                        <ul class="menu">
+                            {{# if login }}
+                            <li>
+                                <a href="/user/profile">
+                                    User Account
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/user/logout">
+                                    Logout
+                                </a>
+                            </li>
+                            {{ else }}
+                            <li><a href="/user/signup">Sign Up</a></li>
+                            <li><a href="/user/signin">Sign In</a></li>
+                            {{/if}}
+                        </ul>
+                    </li>
+                </ul>
             </li>
             <li>
                 <form method="post" action="/search-for-item">
