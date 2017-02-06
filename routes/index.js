@@ -31,6 +31,20 @@ router.get('/products', function(req, res){
     });
 });
 
+// categories page
+router.get('/products/:category', function(req, res){
+    var messages = req.flash('error');
+    var category = req.params.category;
+    Product.find(function(err, docs){
+        var productChunks = [];
+        var chunkSize = docs.length;
+        for (var i = 0; i < docs.length; i += chunkSize) {
+            productChunks.push(docs.slice(i, i + chunkSize));
+        }
+        res.render('category', {title: 'Categories', products:productChunks, hasErrors:messages.length > 0,category:category});
+    }).where('category').equals(category);;
+});
+
 // contact page form submitted
 router.post('/contact', function(req, res){
     req.checkBody('email', 'Enter a valid email address').isEmail();
