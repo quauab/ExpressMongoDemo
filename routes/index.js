@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Product = require('../models/product');
+var Cart = require('../models/cart');
 
 // home page
 router.get('/', function(req, res){
@@ -45,6 +46,48 @@ router.post('/contact', function(req, res){
     } else {
         res.render('contact',{title:'Contact',errors:undefined});
     }
+});
+
+router.post('/search-for-item', function(req, res, next){
+    var keyword = req.body.keyword;
+    var messages = req.flash('error');
+    var status = '';
+    Product.find(function(err, docs){
+        var productChunks = [];
+        var chunkSize = docs.length;
+        
+        for (var i = 0; i < docs.length; i += chunkSize) {
+            productChunks.push(docs.slice(i, i + chunkSize));
+        }
+        
+        switch(docs.length) {
+            case 1:
+                status = docs.length + ' result';
+                break;
+                
+            default:
+                status = docs.length + ' results';
+                break;
+        }
+        
+        res.render('search/search', {title:'Search', products:productChunks,hasErrors:messages.length > 0,resultStatus:status});
+    }).where('title').equals(keyword);
+});
+
+router.get('/add-to-cart/:id', function(req, res, next){
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+    
+    Product.findById(productId, function(err, product){
+        if (err) {
+            return res.redirect('/products');
+        }
+        
+        cart.add(product, product.id);
+        req.session.cart = cart;
+        console.log(req.session.cart);
+        res.redirect('/products');
+    });
 });
 
 module.exports = router;

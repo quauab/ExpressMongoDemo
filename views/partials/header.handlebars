@@ -29,7 +29,14 @@
            <!--  <li><input id="searchField" type="search" placeholder="Search"></li>
             <li><button id="searchButton" type="button" class="button">Search</button></li> -->
             <li>
-                <form method="post" action="/search">
+                <a href="/shopping-cart">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    Shopping Cart
+                    <span class="badge">{{session.cart.totalQty}}</span>
+                </a>
+            </li>
+            <li>
+                <form method="post" action="/search-for-item">
                     <div class="input-group">
                         <span class="input-group-label" style="margin:0;"><i class="fi-page-search" style="font-size:18pt;color:rgb(100,120,180);padding:0;margin:0;"></i></span>
                         <input class="input-group-field" type="text" name="keyword"  placeholder="Search" required>
@@ -38,7 +45,7 @@
                         </div>
                     </div>
                 </form>
-            </li>
+            </li>               
         </ul>
     </div>
 </div>
