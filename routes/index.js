@@ -29,7 +29,6 @@ router.get('/products', function(req, res){
         }
         res.render('products', {title: 'Products', products:productChunks, hasErrors:messages.length > 0});
     });
-	// res.render('products',{title:'Products'});
 });
 
 // contact page form submitted
@@ -37,8 +36,7 @@ router.post('/contact', function(req, res){
     req.checkBody('email', 'Enter a valid email address').isEmail();
     req.checkBody('name','Provide your name').isLength({min:1});
     req.checkBody('subject','What\'s the reason for the message?').optional();
-    req.checkBody('message','Enter your message').isLength({min:1,max:100});
-    
+    req.checkBody('message','Enter your message').isLength({min:1,max:100});    
     var errors = req.validationErrors();
     if (errors) {
         res.render('contact',{title:'Contact', errors:errors});
@@ -54,12 +52,10 @@ router.post('/search-for-item', function(req, res, next){
     var status = '';
     Product.find(function(err, docs){
         var productChunks = [];
-        var chunkSize = docs.length;
-        
+        var chunkSize = docs.length;        
         for (var i = 0; i < docs.length; i += chunkSize) {
             productChunks.push(docs.slice(i, i + chunkSize));
-        }
-        
+        }        
         switch(docs.length) {
             case 1:
                 status = docs.length + ' result';
@@ -68,21 +64,18 @@ router.post('/search-for-item', function(req, res, next){
             default:
                 status = docs.length + ' results';
                 break;
-        }
-        
+        }        
         res.render('search/search', {title:'Search', products:productChunks,hasErrors:messages.length > 0,resultStatus:status});
     }).where('title').equals(keyword);
 });
 
 router.get('/add-to-cart/:id', function(req, res, next){
     var productId = req.params.id;
-    var cart = new Cart(req.session.cart ? req.session.cart : {});
-    
+    var cart = new Cart(req.session.cart ? req.session.cart : {});    
     Product.findById(productId, function(err, product){
         if (err) {
             return res.redirect('/products');
-        }
-        
+        }        
         cart.add(product, product.id);
         req.session.cart = cart;
         console.log(req.session.cart);
