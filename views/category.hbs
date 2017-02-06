@@ -1,0 +1,16 @@
+<div class="accordion" data-accordion data-allow-all-closed="true">
+    <div data-accordion-item>
+        <a href="#" class="accordion-title"><h4><%=product.title%></h4></a>
+        <div class="accordion-content" data-tab-content>
+            <div data-id="<%=product.id%>" class="card product">
+                <div class="card-divider">
+                    <h4><%=product.category%></h4>
+                </div>
+                <img class="small-11 medium-9 large-10 columns" src="<%=product.source%>"/>
+                <div class="card-section">
+                    <p><%=product.description%>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>      
