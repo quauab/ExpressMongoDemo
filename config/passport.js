@@ -13,15 +13,12 @@ passport.deserializeUser(function(id, done){
 });
 
 passport.use('local.signup', new LocalStrategy({
-    usernameField: 'username',
-    emailField: 'email',
+    usernameField: 'email',
     password: 'password',
-    password2: 'password2',
     passReqToCallback: true
-}, function(req, email, password, password2, done){
+}, function(req, email, password, done){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.checkBody('password', 'Invalid email').notEmpty().isLength({min:4});
-    req.checkBody('password2', 'Passwords don\'t match').notEmpty().equals(password);
     
     var errors = req.validationErrors();
     
@@ -56,11 +53,11 @@ passport.use('local.signup', new LocalStrategy({
 }));
 
 passport.use('local.signin', new LocalStrategy({
-    usernameField: 'username',
+    usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
-}, function(req, username, password, done){
-    req.checkBody('username', 'Invalid username').notEmpty();
+}, function(req, email, password, done){
+    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
     req.checkBody('password', 'Invalid email').notEmpty();
     
     var errors = req.validationErrors();
@@ -73,7 +70,7 @@ passport.use('local.signin', new LocalStrategy({
         return done(null, false, req.flash('error', messages));
     }
     
-    User.findOne({'username':username}, function(err, user){
+    User.findOne({'email':email}, function(err, user){
         if (err) {
             return done(err);
         }

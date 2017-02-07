@@ -14,8 +14,8 @@ var express = require('express'),
 
 // path to the router
 var routes = require('./routes/index');
-var userRoutes = require('./routes/user');
-var userAdmin = require('./routes/userAdmin');
+var userRoutes = require('./routes/users');
+var userAdmin = require('./routes/usersAdmin');
 
 var app = express();
 
