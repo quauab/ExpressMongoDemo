@@ -72,6 +72,22 @@ img {
 
 
 
+/* Admin Profile */
+.admin-form [type="text"] {
+    height:30px;
+}
+
+.admin-form [type="submit"] {
+    height:30px;
+}
+
+
+
+
+
+
+
+
 /* Admin Sign in Page */
 .admin-signin {
     padding:20px;
