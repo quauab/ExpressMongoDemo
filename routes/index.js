@@ -5,17 +5,17 @@ var Cart = require('../models/cart');
 
 // home page
 router.get('/', function(req, res){
-	res.render('index',{title:'Home'});
+	res.render('index',{title:'Home',admin:false});
 });
 
 // about page
 router.get('/about', function(req, res){
-	res.render('about',{title:'About'});
+	res.render('about',{title:'About',admin:false});
 });
 
 // contact page
 router.get('/contact', function(req, res){
-	res.render('contact',{title:'Contact',errors:req.validationErrors()});
+	res.render('contact',{title:'Contact',errors:req.validationErrors(),admin:false});
 });
 
 // products page
@@ -27,7 +27,7 @@ router.get('/products', function(req, res){
         for (var i = 0; i < docs.length; i += chunkSize) {
             productChunks.push(docs.slice(i, i + chunkSize));
         }
-        res.render('products', {title: 'Products', products:productChunks, hasErrors:messages.length > 0});
+        res.render('products', {title: 'Products', products:productChunks, hasErrors:messages.length > 0,admin:false});
     });
 });
 
@@ -41,7 +41,7 @@ router.get('/products/:category', function(req, res){
         for (var i = 0; i < docs.length; i += chunkSize) {
             productChunks.push(docs.slice(i, i + chunkSize));
         }
-        res.render('category', {title: 'Categories', products:productChunks, hasErrors:messages.length > 0,category:category});
+        res.render('category', {title: 'Categories', products:productChunks, hasErrors:messages.length > 0,category:category,admin:false});
     }).where('category').equals(category);;
 });
 
@@ -53,10 +53,10 @@ router.post('/contact', function(req, res){
     req.checkBody('message','Enter your message').isLength({min:1,max:100});    
     var errors = req.validationErrors();
     if (errors) {
-        res.render('contact',{title:'Contact', errors:errors});
+        res.render('contact',{title:'Contact', errors:errors,admin:false});
         return;
     } else {
-        res.render('contact',{title:'Contact',errors:undefined});
+        res.render('contact',{title:'Contact',errors:undefined,admin:false});
     }
 });
 
@@ -79,7 +79,7 @@ router.post('/search-for-item', function(req, res, next){
                 status = docs.length + ' results';
                 break;
         }        
-        res.render('search/search', {title:'Search', products:productChunks,hasErrors:messages.length > 0,resultStatus:status});
+        res.render('search/search', {title:'Search', products:productChunks,hasErrors:messages.length > 0,resultStatus:status,admin:false});
     }).where('title').equals(keyword);
 });
 

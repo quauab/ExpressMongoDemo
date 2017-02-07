@@ -2,12 +2,21 @@ var express = require('express');
 var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
+var Product = require('../models/product');
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
-router.get('/profile', isLoggedIn, function(req, res, next){
-    res.render('admin/profile');
+router.get('/profile', isLoggedIn, function(req, res, next){    
+    var messages = req.flash('error');
+    Product.find(function(err, docs){
+        var productChunks = [];
+        var chunkSize = docs.length;
+        for (var i = 0; i < docs.length; i += chunkSize) {
+            productChunks.push(docs.slice(i, i + chunkSize));
+        }
+        res.render('admin/profile', {title: 'Admin', products:productChunks, hasErrors:messages.length > 0,admin:true});
+    });
 });
 
 router.get('/logout', function(req, res, next){
@@ -21,7 +30,7 @@ router.use('/', notLoggedIn, function(req, res, next){
 
 router.get('/signup', function(req, res, next){
     var messages = req.flash('error');
-    res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0});
+    res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
 });
 
 router.post('/signup', passport.authenticate('local.signup', {
@@ -32,7 +41,7 @@ router.post('/signup', passport.authenticate('local.signup', {
 
 router.get('/signin', function(req, res, next){
     var messages = req.flash('error');
-    res.render('admin/signin', {title:'Sign In', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0});
+    res.render('admin/signin', {title:'Sign In', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
 });
 
 router.post('/signin', passport.authenticate('local.signin', {
