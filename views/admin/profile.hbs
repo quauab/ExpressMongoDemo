@@ -11,17 +11,32 @@
         <div>
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-responsive-menu="drilldown medium-dropdown">
-                    <li><a href="/admin/logout" class="button small">Log Out</a></li>
+                    <li><a href="/admin/logout">Log Out</a></li>
+                    <li><a href="#" data-toggle="addNewProduct">Add Product</a></li>
                 </ul>
             </div>
-            <div class="top-bar-right"></div>
+            <div class="top-bar-right">
+                <ul class="dropdown menu">                    
+                    <li>
+                        <form method="post" action="/admin/search-for-item">
+                            <div class="input-group">
+                                <span class="input-group-label" style="margin:0;"><i class="fi-page-search" style="font-size:18pt;color:rgb(100,120,180);padding:0;margin:0;"></i></span>
+                                <input class="input-group-field" type="text" name="keyword"  placeholder="Search" required>
+                                <div class="input-group-button">
+                                    <input type="submit" class="button" value="Submit">
+                                </div>
+                            </div>
+                        </form>
+                    </li>       
+                </ul>
+            </div>
         </div>
     </div>
 
 
     <div class="row">
         <div class="small-10 medium-10 large-10 columns">
-        <h3>Tools</h3>
+        <h3>Manage Products</h3>
             {{# each products }}
                 <div class="products v-scroll">
                     {{# each this }}
@@ -72,6 +87,73 @@
                     {{/each}}
                 </div>
             {{/each}}
+        </div>
+    </div>
+</div>
+
+<div class=" new-product">     
+    <div class="off-canvas position-right" id="addNewProduct" data-transition="push" data-off-canvas>    
+        <!-- Close button -->
+        <button class="close-button" aria-label="Close menu" type="button" data-close>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        
+        <h4 style="text-align:center;margin-top:35px;">Add New Product</h4>
+        
+        <div class="row">
+            <div class="small-12 medium-6 large-12 columns">
+                <form class="new-product-form" method="post" action="/admin/add-new-product">
+                    <div class="input-group">
+                        <input class="input-group-field" type="hidden" name="_csrf"  value="{{csrfToken}}" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <span class="input-group-label" style="margin:0;">
+                            <i class="fi-photo" style="font-size:24px;margin:0;"></i>
+                        </span>
+                        <input class="input-group-field" type="text" name="photo"  placeholder="Image Path" required>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-label" style="margin:0;">
+                            <i class="fi-annotate" style="font-size:24px;margin:0;"></i>
+                        </span>
+                        <input class="input-group-field" type="text" name="title"  placeholder="Title" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <span class="input-group-label" style="margin:0;">
+                            <i class="fi-flag" style="font-size:24px;margin:0;"></i>
+                        </span>
+                        <input class="input-group-field" type="text" name="category"  placeholder="Category" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <span class="input-group-label" style="margin:0;">
+                            <i class="fi-list-number" style="font-size:24px;margin:0;"></i>
+                        </span>
+                        <input class="input-group-field" type="text" name="quantity"  placeholder="Quantity" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <span class="input-group-label" style="margin:0;">
+                            <i class="fi-comment" style="font-size:24px;margin:0;"></i>
+                        </span>
+                        <textarea class="input-group-field" type="text" name="description"  placeholder="Description" required></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <span class="input-group-label" style="margin:0;">
+                            <i class="fi-dollar" style="font-size:24px;margin:0;"></i>
+                        </span>
+                        <input class="input-group-field" type="text" name="price"  placeholder="Price" required>
+                    </div>
+                    
+                    <div class="input-group-button">
+                        <input type="submit" class="button" value="Submit">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

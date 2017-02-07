@@ -15,7 +15,7 @@ router.get('/profile', isLoggedIn, function(req, res, next){
         for (var i = 0; i < docs.length; i += chunkSize) {
             productChunks.push(docs.slice(i, i + chunkSize));
         }
-        res.render('admin/profile', {title: 'Admin', products:productChunks, hasErrors:messages.length > 0,admin:true});
+        res.render('admin/profile', {title: 'Admin', products:productChunks, csrfToken: req.csrfToken(), hasErrors:messages.length > 0,admin:true});
     });
 });
 
