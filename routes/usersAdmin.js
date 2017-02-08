@@ -25,8 +25,28 @@ router.get('/search', canSearch, function(req, res){
 
 router.post('/search', function(req, res){    
     var keyword = req.body.keyword;
+    var messages = req.flash('error');
     console.log(keyword);
-    res.render('admin/search',{title:'Search', keyword:keyword, search:true, admin:true});
+    
+    Product.find({ $or: [ { category: { $eq: keyword } }, { title: keyword } ] }, function(err, docs){
+        var productChunks = [];
+        var chunkSize = docs.length;        
+        for (var i = 0; i < docs.length; i += chunkSize) {
+            productChunks.push(docs.slice(i, i + chunkSize));
+        }        
+        switch(docs.length) {
+            case 1:
+                status = docs.length + ' result';
+                break;
+                
+            default:
+                status = docs.length + ' results';
+                break;
+        }        
+        res.render('admin/search', {title:'Search Results', products:productChunks, hasErrors:messages.length > 0, resultStatus:status, admin:true, search:true});
+    });
+    
+    // res.render('admin/search',{title:'Search', keyword:keyword, search:true, admin:true});
 });
 
 router.get('/profile', isLoggedIn, function(req, res, next){    
