@@ -29,8 +29,9 @@ router.use('/', notLoggedIn, function(req, res, next){
 });
 
 router.get('/signup', function(req, res, next){
-    var messages = req.flash('error');
-    res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
+    // var messages = req.flash('error');
+    // res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
+    next();
 });
 
 router.post('/signup', passport.authenticate('local.signup', {
