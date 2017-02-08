@@ -5,9 +5,9 @@ var passport = require('passport');
 var Product = require('../models/product');
 
 var csrfProtection = csrf();
-router.use(csrfProtection);
+// router.use(csrfProtection);
 
-router.get('/profile', isLoggedIn, function(req, res, next){    
+router.get('/profile', isLoggedIn, csrfProtection, function(req, res, next){    
     var messages = req.flash('error');
     Product.find(function(err, docs){
         var productChunks = [];
@@ -15,7 +15,7 @@ router.get('/profile', isLoggedIn, function(req, res, next){
         for (var i = 0; i < docs.length; i += chunkSize) {
             productChunks.push(docs.slice(i, i + chunkSize));
         }
-        res.render('admin/profile', {title: 'Admin', products:productChunks, csrfToken: req.csrfToken(), hasErrors:messages.length > 0,admin:true});
+        res.render('admin/adminprofile', {title: 'Admin', products:productChunks, csrfToken: req.csrfToken(), hasErrors:messages.length > 0,admin:true});
     });
 });
 
@@ -28,21 +28,22 @@ router.use('/', notLoggedIn, function(req, res, next){
     next();
 });
 
+/*
 router.get('/signup', function(req, res, next){
-    // var messages = req.flash('error');
-    // res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
+    var messages = req.flash('error');
+    res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
     next();
 });
 
 router.post('/signup', passport.authenticate('local.signup', {
-    successRedirect: '/admin/profile',
-    failureRedirect: '/admin/signup',
+    successRedirect: '/admin/adminprofile',
+    failureRedirect: '/admin/adminsignup',
     failureFlash: true
-}));
+}));*/
 
-router.get('/signin', function(req, res, next){
+router.get('/signin', csrfProtection, function(req, res, next){
     var messages = req.flash('error');
-    res.render('admin/signin', {title:'Sign In', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
+    res.render('admin/adminsignin', {title:'Sign In', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
 });
 
 router.post('/signin', passport.authenticate('local.signin', {
@@ -50,12 +51,6 @@ router.post('/signin', passport.authenticate('local.signin', {
     failureRedirect: '/admin/signin',
     failureFlash: true
 }));
-
-router.get('/search-for-item/:keyword', function(req, res, next){
-    var keyword = req.params.keyword;
-    console.log('Admin search keyword: ' + keyword);
-    res.redirect('/admin/profile');
-});
 
 module.exports = router;
 
