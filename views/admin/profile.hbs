@@ -23,7 +23,7 @@
                                 <span class="input-group-label" style="margin:0;">
                                     <i class="fi-page-search" style="font-size:18pt;color:rgb(100,120,180);padding:0;margin:0;"></i>
                                 </span>
-                                <input class="input-group-field" type="text" id="productSearchKeyword"  placeholder="Search" required>
+                                <input class="input-group-field" type="text" id="productSearchKeyword"  placeholder="Search">
                                 <div class="input-group-button">
                                     <input id="productSearchButton" type="submit" class="button" value="Submit">
                                 </div>
@@ -78,6 +78,13 @@
                                                 <i class="fi-list-number" style="font-size:14px;margin:0;"></i>
                                             </span>
                                             <input class="input-group-field" type="text" name="quantity"  placeholder="Quantity" required>
+                                        </div>
+                                        
+                                        <div class="input-group">
+                                            <span class="input-group-label" style="margin:0;">
+                                                <i class="fi-photo" style="font-size:14px;margin:0;"></i>
+                                            </span>
+                                            <input class="input-group-field" type="text" name="image-path"  placeholder="Image Source" required>
                                         </div>
                                         <div class="input-group-button">
                                             <input type="submit" class="button" value="Update">
@@ -164,10 +171,11 @@
     $(function(){
         var $button = $('#productSearchButton');
         var $input = $('#productSearchKeyword');
+        var url = '/admin/search-for-item/' + $input.val();
         
         $button.on('click', function(){
             $.ajax({
-                url:'/admin/search-for-item/' + $input.val(),
+                url:url,
                 type:'GET',
                 success:function(data){window.location.href=url;},
                 error:function(err){console.log(err);}
