@@ -51,6 +51,12 @@ router.post('/signin', passport.authenticate('local.signin', {
     failureFlash: true
 }));
 
+router.get('/search-for-item/:keyword', function(req, res, next){
+    var keyword = req.params.keyword;
+    console.log('Admin search keyword: ' + keyword);
+    res.redirect('/admin/profile');
+});
+
 module.exports = router;
 
 function isLoggedIn(req, res, next) {
