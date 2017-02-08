@@ -7,7 +7,7 @@ var Product = require('../models/product');
 var csrfProtection = csrf();
 // router.use(csrfProtection);
 
-router.get('/profile', isLoggedIn, function(req, res, next){    
+router.get('/products', canListProducts, function(req, res){
     var messages = req.flash('error');
     Product.find(function(err, docs){
         var productChunks = [];
@@ -15,18 +15,22 @@ router.get('/profile', isLoggedIn, function(req, res, next){
         for (var i = 0; i < docs.length; i += chunkSize) {
             productChunks.push(docs.slice(i, i + chunkSize));
         }
-        res.render('admin/adminprofile', {title: 'Admin', products:productChunks, hasErrors:messages.length > 0,admin:true});
+        res.render('admin/products', {title: 'Admin', products:productChunks, hasErrors:messages.length > 0,admin:true});
     });
 });
 
 router.get('/search', canSearch, function(req, res){
-    res.render('admin/adminsearch',{title:'Search', admin:true, search:false});
+    res.render('admin/search',{title:'Search', admin:true, search:false});
 });
 
 router.post('/search', function(req, res){    
     var keyword = req.body.keyword;
     console.log(keyword);
-    res.render('admin/adminsearch',{title:'Search', keyword:keyword, search:true, admin:true});
+    res.render('admin/search',{title:'Search', keyword:keyword, search:true, admin:true});
+});
+
+router.get('/profile', isLoggedIn, function(req, res, next){    
+    res.render('admin/profile', {admin:true});
 });
 
 router.get('/logout', function(req, res, next){
@@ -53,7 +57,7 @@ router.post('/signup', passport.authenticate('local.signup', {
 
 router.get('/signin', csrfProtection, function(req, res, next){
     var messages = req.flash('error');
-    res.render('admin/adminsignin', {title:'Sign In', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
+    res.render('admin/signin', {title:'Sign In', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
 });
 
 router.post('/signin', passport.authenticate('local.signin', {
@@ -72,6 +76,13 @@ function isLoggedIn(req, res, next) {
 }
 
 function canSearch(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/admin/signin');
+}
+
+function canListProducts(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
