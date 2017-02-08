@@ -43,10 +43,8 @@ router.post('/search', function(req, res){
                 status = docs.length + ' results';
                 break;
         }        
-        res.render('admin/search', {title:'Search Results', products:productChunks, hasErrors:messages.length > 0, resultStatus:status, admin:true, search:true});
+        res.render('admin/search', {title:'Search Results', products:productChunks, hasErrors:messages.length > 0, resultStatus:status, admin:true, search:true, hasResults:productChunks.length > 0});
     });
-    
-    // res.render('admin/search',{title:'Search', keyword:keyword, search:true, admin:true});
 });
 
 router.get('/profile', isLoggedIn, function(req, res, next){    
