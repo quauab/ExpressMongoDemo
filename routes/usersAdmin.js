@@ -7,7 +7,7 @@ var Product = require('../models/product');
 var csrfProtection = csrf();
 // router.use(csrfProtection);
 
-router.get('/profile', isLoggedIn, csrfProtection, function(req, res, next){    
+router.get('/profile', isLoggedIn, function(req, res, next){    
     var messages = req.flash('error');
     Product.find(function(err, docs){
         var productChunks = [];
@@ -15,8 +15,18 @@ router.get('/profile', isLoggedIn, csrfProtection, function(req, res, next){
         for (var i = 0; i < docs.length; i += chunkSize) {
             productChunks.push(docs.slice(i, i + chunkSize));
         }
-        res.render('admin/adminprofile', {title: 'Admin', products:productChunks, csrfToken: req.csrfToken(), hasErrors:messages.length > 0,admin:true});
+        res.render('admin/adminprofile', {title: 'Admin', products:productChunks, hasErrors:messages.length > 0,admin:true});
     });
+});
+
+router.get('/search', canSearch, function(req, res){
+    res.render('admin/adminsearch',{title:'Search', admin:true, search:false});
+});
+
+router.post('/search', function(req, res){    
+    var keyword = req.body.keyword;
+    console.log(keyword);
+    res.render('admin/adminsearch',{title:'Search', keyword:keyword, search:true, admin:true});
 });
 
 router.get('/logout', function(req, res, next){
@@ -59,6 +69,13 @@ function isLoggedIn(req, res, next) {
         return next();
     }
     res.redirect('/admin/profile');
+}
+
+function canSearch(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/admin/signin');
 }
 
 function notLoggedIn(req, res, next) {
