@@ -64,7 +64,7 @@ router.post('/search-for-item', function(req, res, next){
     var keyword = req.body.keyword;
     var messages = req.flash('error');
     var status = '';
-    Product.find(function(err, docs){
+    Product.find({ $or: [ { category: { $eq: keyword } }, { title: keyword } ] },function(err, docs){
         var productChunks = [];
         var chunkSize = docs.length;        
         for (var i = 0; i < docs.length; i += chunkSize) {
@@ -79,8 +79,8 @@ router.post('/search-for-item', function(req, res, next){
                 status = docs.length + ' results';
                 break;
         }        
-        res.render('search/search', {title:'Search', products:productChunks,hasErrors:messages.length > 0,resultStatus:status,admin:false});
-    }).where('title').equals(keyword);
+        res.render('search/search', {title:'Search', products:productChunks, hasErrors:messages.length > 0, resultStatus:status, hasResults:productChunks.length > 0, admin:false});
+    });
 });
 
 router.get('/add-to-cart/:id', function(req, res, next){

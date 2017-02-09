@@ -1,9 +1,43 @@
 {{#if hasErrors}}
-   <div class="alert alert-danger">
+   <div class="alert callout">
     {{# each messages }}
         <p>{{this}}</p>
     {{/each }}
    </div>
 {{/if}}
 
-<h1>{{resultStatus}}</h1>
+{{# if hasResults }}
+    {{# each products }}
+        <div class="products v-scroll">
+            {{# each this }}
+                <div class="media-object">
+                    <div class="media-object-section align-self-center stack-for-small">
+                        <div class="thumbnail">
+                            <img src="{{this.imagePath}}">
+                        </div>
+                    </div>
+                    <div class="media-object-section main-section">
+                        <h4>{{this.title}}</h4>
+                        <p class="v-scroll paragraph">{{this.description}}</p>
+                    </div>
+                    <div class="media-object-section align-self-bottom">
+                        <div class="">
+                            <span class="label">${{this.price}}</span>
+                            <span class="label">Qty {{this.quantity}}</span>
+                            <a class="label success" href="/add-to-cart/{{this._id}}">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                Add to Cart
+                            </a>
+                        </div>
+                    </div>              
+                </div><hr>
+            {{/each}}
+        </div>
+    {{/each}}
+{{ else }}
+    <div class="row">
+        <div class="small-12 medium-12 large-12 columns">
+            <h4>{{ resultStatus }}</h4>
+        </div>
+    </div>
+{{/if}}
