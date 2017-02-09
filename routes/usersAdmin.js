@@ -20,7 +20,7 @@ router.get('/products', canListProducts, function(req, res){
 });
 
 router.get('/search', canSearch, function(req, res){
-    res.render('admin/search',{title:'Search', admin:true, search:false});
+    res.render('admin/search',{title:'Search', admin:true});
 });
 
 router.post('/search', function(req, res){    
@@ -43,7 +43,7 @@ router.post('/search', function(req, res){
                 status = docs.length + ' results';
                 break;
         }        
-        res.render('admin/search', {title:'Search Results', products:productChunks, hasErrors:messages.length > 0, resultStatus:status, admin:true, search:true, hasResults:productChunks.length > 0});
+        res.render('admin/search', {title:'Search Results', products:productChunks, hasErrors:messages.length > 0, messages:messages, resultStatus:status, admin:true, hasResults:productChunks.length > 0});
     });
 });
 
