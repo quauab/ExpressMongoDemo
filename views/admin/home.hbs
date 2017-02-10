@@ -1,0 +1,32 @@
+{{#if hasErrors}}
+   <div class="alert callout">
+    {{# each messages }}
+        <p>{{this}}</p>
+    {{/each }}
+   </div>
+{{/if}}
+<div class="row">
+    <div class="top-bar menu small-12 medium-12 large-12 columns">
+        <div class="top-bar-title"><strong>Dashboard</strong></div>
+        <div>
+            <div class="top-bar-left">
+                <ul class="dropdown menu" data-responsive-menu="drilldown medium-dropdown">
+                    <li><a href="/admin/logout">Log Out</a></li>
+                    <li><a href="/admin/products">Products</a></li>
+                </ul>
+            </div>
+            <div class="top-bar-right">
+                <ul class="dropdown menu">                    
+                    <li><a href="/admin/search">Search</a></li>       
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="small-12 medium-12 large-12 columns">
+        <h4>Home</h4>
+    </div>
+</div>
+   

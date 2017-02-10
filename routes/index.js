@@ -3,6 +3,10 @@ var router = express.Router();
 var Product = require('../models/product');
 var Cart = require('../models/cart');
 
+const admins = [
+    {name:'quebid@hotmail.com',pwd:'password'}
+];
+
 // home page
 router.get('/', function(req, res){
 	res.render('index',{title:'Home',admin:false});
@@ -95,6 +99,30 @@ router.get('/add-to-cart/:id', function(req, res, next){
         console.log(req.session.cart);
         res.redirect('/products');
     });
+});
+
+// admin login test
+router.get('/auth', function(req, res){
+     var messages = req.flash('error');
+    res.render('admin-login', {title:'Admin Login', hasErrors:messages.length > 0, messages:messages});
+});
+
+router.post('/auth', function(req, res){
+    var username = req.body.email;
+    var pwd = req.body.pwd;
+    var index = admins.findIndex(x => (x.name == username));
+    
+    if (index !== -1) {
+        var user = admins[index];
+        if (pwd == user.pwd) {
+            res.redirect('/admin/signin');
+        } else {
+            res.redirect('/products');
+        }
+    } else {
+        res.redirect('/');
+    }
+    
 });
 
 module.exports = router;

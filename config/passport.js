@@ -15,6 +15,7 @@ passport.deserializeUser(function(id, done){
 passport.use('local.signup', new LocalStrategy({
     usernameField: 'email',
     password: 'password',
+    adminField: 'admin',
     passReqToCallback: true
 }, function(req, email, password, done){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
@@ -42,6 +43,7 @@ passport.use('local.signup', new LocalStrategy({
         var newUser = new User();
         newUser.email = email;
         newUser.password = newUser.encryptPassword(password);
+        newUser.admin = req.body.admin;
         newUser.save(function(err, result){
             if (err) {
                 return done(err);
@@ -82,6 +84,46 @@ passport.use('local.signin', new LocalStrategy({
         if (!user.validPassword(password)) {
             return done(null, false, {message: 'Invalid email or password.'});
         } 
+        
+        return done(null, user);
+    });
+}));
+
+passport.use('local.admin.signin', new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+    adminField: 'admin',
+    passReqToCallback: true
+}, function(req, email, password, done){
+    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+    req.checkBody('password', 'Invalid email').notEmpty();
+        
+    var errors = req.validationErrors();
+    
+    if (errors) {
+        var messages = [];
+        errors.forEach(function(error){
+            messages.push(error.msg);
+        });
+        return done(null, false, req.flash('error', messages));
+    }
+    
+    User.findOne({'email':email}, function(err, user){
+        if (err) {
+            return done(err);
+        }
+        
+        if (!user) {
+            return done(null, false, {message: 'Invalid email or password.'});
+        }
+        
+        if (!user.validPassword(password)) {
+            return done(null, false, {message: 'Invalid email or password.'});
+        }
+        
+        if (!req.body.admin) {
+            return done(null, false, {message: 'Invalid user.'});
+        }
         
         return done(null, user);
     });

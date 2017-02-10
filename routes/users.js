@@ -7,7 +7,7 @@ var csrfProtection = csrf();
 router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function(req, res, next){
-    res.render('user/profile');
+    res.render('user/profile',{title:'Profile', admin:false});
 });
 
 router.get('/logout', function(req, res, next){
@@ -21,7 +21,7 @@ router.use('/', notLoggedIn, function(req, res, next){
 
 router.get('/signup', function(req, res, next){
     var messages = req.flash('error');
-    res.render('user/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0});
+    res.render('user/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0, isAdmin:false, admin:false});
 });
 
 router.post('/signup', passport.authenticate('local.signup', {
@@ -32,7 +32,7 @@ router.post('/signup', passport.authenticate('local.signup', {
 
 router.get('/signin', function(req, res, next){
     var messages = req.flash('error');
-    res.render('user/signin', {title:'Sign In', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0});
+    res.render('user/signin', {title:'Sign In', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0, isAdmin:false, admin:false});
 });
 
 router.post('/signin', passport.authenticate('local.signin', {
