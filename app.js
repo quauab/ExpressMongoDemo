@@ -54,10 +54,6 @@ app.use(function(req, res, next){
 // static resources
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/admin/signin',function(req, res, next){
-    // res.redirect('/auth');
-// });
-
 // routes
 app.use('/', routes);
 app.use('/admin', userAdmin);
