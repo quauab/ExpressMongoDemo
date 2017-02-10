@@ -63,16 +63,22 @@ router.post('/signin', passport.authenticate('local.admin.signin', {
 }));
 
 router.post('/update-product', function(req, res){
-     var photo = req.body.photo,
+    var photo = req.body.photo,
         title = req.body.title,
-        id = req.body.productId,
+        category = req.body.category,
         quantity = req.body.quantity,
-        price = req.body.price;
+        description = req.body.description,
+        price = req.body.price,
+        id = req.body.productId;
         
     console.log('\n\t\tUpdating product: ' + title);
     console.log('ID: ' + id);
+    console.log('Title: ' + title);
+    console.log('Category: ' + category);
     console.log('New Quantity: ' + quantity);
+    console.log('Description: ' + description);
     console.log('New Price: ' + price);
+    console.log('New Image Path: ' + photo);
     res.redirect('/admin/products');
 });
 
@@ -89,7 +95,14 @@ router.post('/add-new-product', function(req, res){
     console.log('New Category: ' + category);
     console.log('New Quantity: ' + quantity);
     console.log('New Description: ' + description);
+    console.log('New Image Path: ' + photo);
     console.log('New Price: ' + price);
+    res.redirect('/admin/products');
+});
+
+router.get('/delete-product/:id', function(req, res){
+    var id = req.params.id;
+    console.log('Deleting Product Id: ' + id);
     res.redirect('/admin/products');
 });
 
