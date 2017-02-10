@@ -62,6 +62,37 @@ router.post('/signin', passport.authenticate('local.admin.signin', {
     failureFlash: true
 }));
 
+router.post('/update-product', function(req, res){
+     var photo = req.body.photo,
+        title = req.body.title,
+        id = req.body.productId,
+        quantity = req.body.quantity,
+        price = req.body.price;
+        
+    console.log('\n\t\tUpdating product: ' + title);
+    console.log('ID: ' + id);
+    console.log('New Quantity: ' + quantity);
+    console.log('New Price: ' + price);
+    res.redirect('/admin/products');
+});
+
+router.post('/add-new-product', function(req, res){
+    var photo = req.body.photo,
+        title = req.body.title,
+        category = req.body.category,
+        quantity = req.body.quantity,
+        description = req.body.description,
+        price = req.body.price;
+        
+    console.log('\n\t\tAdding product: ' + title);
+    console.log('New Title: ' + title);
+    console.log('New Category: ' + category);
+    console.log('New Quantity: ' + quantity);
+    console.log('New Description: ' + description);
+    console.log('New Price: ' + price);
+    res.redirect('/admin/products');
+});
+
 router.get('/logout', function(req, res, next){
     req.logout();
     res.redirect('/admin/signin');
