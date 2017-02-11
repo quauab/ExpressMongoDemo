@@ -26,69 +26,67 @@
    </div>
 {{/if}}
 <div class="row"> 
-    <div class="row">
-        <div class="small-12 medium-12 large-12 columns">
-            <h4>Manage Products</h4>
-            {{# each products }}
-                <div class="products v-scroll">
-                    {{# each this }}
-                        <div class="media-object">
-                            <div class="media-object-section align-self-center">
-                                <div class="thumbnail">
-                                    <img src="/{{this.imagePath}}">
-                                </div>
+    <div class="small-12 medium-12 large-12 columns">
+        <h4>Manage Products</h4>
+        {{# each products }}
+            <div class="products v-scroll">
+                {{# each this }}
+                    <div class="media-object">
+                        <div class="media-object-section align-self-center">
+                            <div class="thumbnail">
+                                <img src="/{{this.imagePath}}">
                             </div>
-                            <div class="media-object-section main-section">
-                                <h4>{{this.title}}</h4>
-                                <p class="v-scroll paragraph">{{this.description}}</p>
+                        </div>
+                        <div class="media-object-section main-section">
+                            <h4>{{this.title}}</h4>
+                            <p class="v-scroll paragraph">{{this.description}}</p>
+                        </div>
+                        <div class="media-object-section align-self-center">
+                            <div class="">
+                                <span class="label">${{this.price}}</span>
+                                <span class="label">Qty {{this.quantity}}</span>
+                                <span  class="label alert">
+                                    <a class="delete-product" style="color:white;" data-url="/admin/delete-product/{{this.id}}" href="#">
+                                        Delete
+                                    </a>
+                                </span>
                             </div>
-                            <div class="media-object-section align-self-center">
-                                <div class="">
-                                    <span class="label">${{this.price}}</span>
-                                    <span class="label">Qty {{this.quantity}}</span>
-                                    <span  class="label alert">
-                                        <a class="delete-product" style="color:white;" data-url="/admin/delete-product/{{this.id}}" href="#">
-                                            Delete
-                                        </a>
-                                    </span>
-                                </div>
-                            </div>   
-                            <div class="media-object-section align-self-bottom">
-                                <div class="update-product">
-                                    <form class="admin-form" method="POST" action="/admin/update-product">
-                                        <input type="hidden" name="productId" value="{{this.id}}">
-                                        <input type="hidden" name="title" value="{{this.title}}">
-                                        <input type="hidden" name="category" value="{{this.category}}">
-                                        <input type="hidden" name="description" value="{{this.description}}">                                        
-                                        <div class="input-group">
-                                            <span class="input-group-label" style="margin:0;">
-                                                <i class="fi-price-tag" style="font-size:14px;margin:0;"></i>
-                                            </span>
-                                            <input class="input-group-field" type="text" name="price"  placeholder="Price" required>
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-label" style="margin:0;">
-                                                <i class="fi-list-number" style="font-size:14px;margin:0;"></i>
-                                            </span>
-                                            <input class="input-group-field" type="text" name="quantity"  placeholder="Quantity" required>
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-label" style="margin:0;">
-                                                <i class="fi-photo" style="font-size:14px;margin:0;"></i>
-                                            </span>
-                                            <input class="input-group-field" type="text" name="photo"  placeholder="Image Source" required>
-                                        </div>
-                                        <div class="input-group-button">
-                                            <input type="submit" class="button" value="Update">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>                             
-                        </div><hr>
-                    {{/each}}
-                </div>
-            {{/each}}
-        </div>
+                        </div>   
+                        <div class="media-object-section align-self-bottom">
+                            <div class="update-product">
+                                <form class="admin-form" method="POST" action="/admin/update-product">
+                                    <input type="hidden" name="productId" value="{{this.id}}">
+                                    <input type="hidden" name="title" value="{{this.title}}">
+                                    <input type="hidden" name="category" value="{{this.category}}">
+                                    <input type="hidden" name="description" value="{{this.description}}">                                        
+                                    <div class="input-group">
+                                        <span class="input-group-label" style="margin:0;">
+                                            <i class="fi-price-tag" style="font-size:14px;margin:0;"></i>
+                                        </span>
+                                        <input class="input-group-field" type="text" name="price"  placeholder="Price" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-label" style="margin:0;">
+                                            <i class="fi-list-number" style="font-size:14px;margin:0;"></i>
+                                        </span>
+                                        <input class="input-group-field" type="text" name="quantity"  placeholder="Quantity" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-label" style="margin:0;">
+                                            <i class="fi-photo" style="font-size:14px;margin:0;"></i>
+                                        </span>
+                                        <input class="input-group-field" type="text" name="photo"  placeholder="Image Source" required>
+                                    </div>
+                                    <div class="input-group-button">
+                                        <input type="submit" class="button" value="Update">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>                             
+                    </div><hr>
+                {{/each}}
+            </div>
+        {{/each}}
     </div>
 </div>
 
