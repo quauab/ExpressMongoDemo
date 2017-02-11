@@ -5,7 +5,6 @@ var Product = require('../models/product');
 var passport = require('passport');
 
 var csrfProtection = csrf();
-// router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, csrfProtection, function(req, res, next){    
     res.render('admin/profile', {admin:true});
