@@ -35,6 +35,15 @@ $(document)
         });
     });
     
+    $('.delete-product').on('click', function(){
+        var url = $(this).data('url');
+        $.ajax({
+            url:url,
+            type:'delete',
+            success: function(data) {window.location.href=url;},
+            error: function(err) {console.log(err);}
+        });
+    });
 })
 .foundation()
 

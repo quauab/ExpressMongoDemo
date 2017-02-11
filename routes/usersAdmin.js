@@ -100,7 +100,7 @@ router.post('/add-new-product', function(req, res){
     res.redirect('/admin/products');
 });
 
-router.get('/delete-product/:id', function(req, res){
+router.delete('/delete-product/:id', function(req, res){
     var id = req.params.id;
     console.log('Deleting Product Id: ' + id);
     res.redirect('/admin/products');
