@@ -7,22 +7,22 @@ const admins = [
     {name:'quebid@hotmail.com',pwd:'password'}
 ];
 
-// home page
+// home view
 router.get('/', function(req, res){
 	res.render('index',{title:'Home',admin:false});
 });
 
-// about page
+// about view
 router.get('/about', function(req, res){
 	res.render('about',{title:'About',admin:false});
 });
 
-// contact page
+// contact view
 router.get('/contact', function(req, res){
 	res.render('contact',{title:'Contact',errors:req.validationErrors(),admin:false});
 });
 
-// products page
+// products view
 router.get('/products', function(req, res){
     var messages = req.flash('error');
     Product.find(function(err, docs){
@@ -35,7 +35,7 @@ router.get('/products', function(req, res){
     });
 });
 
-// categories page
+// categories view
 router.get('/products/:category', function(req, res){
     var messages = req.flash('error');
     var category = req.params.category;
@@ -49,7 +49,7 @@ router.get('/products/:category', function(req, res){
     }).where('category').equals(category);;
 });
 
-// contact page form submitted
+// contact view form submitted
 router.post('/contact', function(req, res){
     req.checkBody('email', 'Enter a valid email address').isEmail();
     req.checkBody('name','Provide your name').isLength({min:1});
@@ -64,6 +64,7 @@ router.post('/contact', function(req, res){
     }
 });
 
+// search view
 router.post('/search-for-item', function(req, res, next){
     var keyword = req.body.keyword;
     var messages = req.flash('error');
@@ -87,6 +88,7 @@ router.post('/search-for-item', function(req, res, next){
     });
 });
 
+// adds item to shopping cart
 router.get('/add-to-cart/:id', function(req, res, next){
     var productId = req.params.id;
     var cart = new Cart(req.session.cart ? req.session.cart : {});    
@@ -101,28 +103,24 @@ router.get('/add-to-cart/:id', function(req, res, next){
     });
 });
 
-// admin login test
-router.get('/auth', function(req, res){
-     var messages = req.flash('error');
-    res.render('admin-login', {title:'Admin Login', hasErrors:messages.length > 0, messages:messages});
-});
-
-router.post('/auth', function(req, res){
-    var username = req.body.email;
-    var pwd = req.body.pwd;
-    var index = admins.findIndex(x => (x.name == username));
-    
-    if (index !== -1) {
-        var user = admins[index];
-        if (pwd == user.pwd) {
-            res.redirect('/admin/signin');
-        } else {
-            res.redirect('/products');
-        }
-    } else {
-        res.redirect('/');
+// shopping cart view
+router.get('/shopping-cart', function(req, res, next){
+    if (!req.session.cart) {
+        return res.render('shop/shopping-cart', {products: null});
     }
     
+    var cart = new Cart(req.session.cart);
+    res.render('shop/shopping-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+});
+
+// checkout view
+router.get('/checkout', function(req, res, next){
+    if (!req.session.cart) {
+        return res.redirect('/shopping-cart');
+    }
+    
+    var cart = new Cart(req.session.cart);
+    res.render('shop/checkout', {total:cart.totalPrice});
 });
 
 module.exports = router;
