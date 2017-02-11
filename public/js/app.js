@@ -203,4 +203,16 @@ function addEmailInput() {
 	$(divParent).appendTo('.registration-form');
 }
 
+function clock() {
+    interval = doInterval(dateTime,1);
+}
 
+function dateTime() {
+	elements().clock.innerHTML = stamp();
+}
+
+function elements() {
+	return {
+		clock:element('clock')
+	};
+}
