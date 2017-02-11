@@ -38,15 +38,29 @@ router.get('/products', function(req, res){
 // categories view
 router.get('/products/:category', function(req, res){
     var messages = req.flash('error');
-    var category = req.params.category;
-    Product.find(function(err, docs){
+    var category = req.params.category;    
+    Product.findByCategory(category, function(err, docs){
         var productChunks = [];
         var chunkSize = docs.length;
         for (var i = 0; i < docs.length; i += chunkSize) {
             productChunks.push(docs.slice(i, i + chunkSize));
         }
         res.render('category', {title: 'Categories', products:productChunks, hasErrors:messages.length > 0,category:category,admin:false});
-    }).where('category').equals(category);;
+    });
+});
+
+// price view
+router.get('/products/:price', function(req, res){
+    var messages = req.flash('error');
+    var price = req.params.price;    
+    Product.findByPrice(price, function(err, docs){
+        var productChunks = [];
+        var chunkSize = docs.length;
+        for (var i = 0; i < docs.length; i += chunkSize) {
+            productChunks.push(docs.slice(i, i + chunkSize));
+        }
+        res.render('category', {title: 'Prices', products:productChunks, hasErrors:messages.length > 0,price:price,admin:false});
+    });
 });
 
 // contact view form submitted

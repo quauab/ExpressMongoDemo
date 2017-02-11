@@ -1,0 +1,36 @@
+<h1>{{price}} <small>Product Prices</small></h1>
+{{#if hasErrors}}
+   <div class="alert callout">
+    {{# each messages }}
+        <p>{{this}}</p>
+    {{/each }}
+   </div>
+{{/if}}
+
+{{# each products }}
+    <div class="products v-scroll">
+        {{# each this }}
+            <div class="media-object">
+                <div class="media-object-section align-self-center stack-for-small">
+                    <div class="thumbnail">
+                        <img src="/{{this.imagePath}}">
+                    </div>
+                </div>
+                <div class="media-object-section main-section">
+                    <h4>{{this.title}}</h4>
+                    <p class="v-scroll paragraph">{{this.description}}</p>
+                </div>
+                <div class="media-object-section align-self-bottom">
+                    <div class="">
+                        <span class="label">${{this.price}}</span>
+                        <span class="label">Qty {{this.quantity}}</span>
+                        <a class="label success" href="/add-to-cart/{{this._id}}">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            Add to Cart
+                        </a>
+                    </div>
+                </div>              
+            </div><hr>
+        {{/each}}
+    </div>
+{{/each}}  

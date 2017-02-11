@@ -10,15 +10,15 @@ var schema = new Schema({
     price: {type: Number, required: true},
 });
 
-schema.statics.findByTitle = function(word) {
+schema.statics.findByTitle = function(word,cb) {
     return this.find({ title: new RegExp(word, 'i') }, cb);
 };
 
-schema.statics.findByCategory = function(word) {
+schema.statics.findByCategory = function(word, cb) {
     return this.find({ category: new RegExp(word, 'i') }, cb);
 };
 
-schema.statics.findByPrice = function(amount) {
+schema.statics.findByPrice = function(amount, cb) {
     return this.find({ price: new RegExp(amount, 'i') }, cb);
 };
 
