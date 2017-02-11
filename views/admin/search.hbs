@@ -19,7 +19,8 @@
         <div class="top-bar-right">
             <ul class="dropdown menu">                    
                 <li>
-                    <form method="POST" action="/admin/search">                           
+                    <form method="POST" action="/admin/search">
+                        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
                         <div class="input-group">
                             <span class="input-group-label" style="margin:0;">
                                 <i class="fi-page-search" style="font-size:18pt;color:rgb(100,120,180);padding:0;margin:0;"></i>
@@ -38,7 +39,7 @@
 
 <div class="row">
     {{# if hasResults }}
-            <div class="small-12 medium-12s large-12 columns">
+            <div class="small-12 medium-12 large-12 columns">
                 <h4>Manage Products</h4>
                 {{# each products }}
                     <div class="products v-scroll">
@@ -100,7 +101,7 @@
                 {{/each}}
             </div>
     {{else}}
-        <div class="small-12 medium-12s large-12 columns">
+        <div class="small-12 medium-12 large-12 columns">
             <h4>{{resultStatus}}</h4>
         </div>
     {{/if}}

@@ -7,11 +7,11 @@ var passport = require('passport');
 var csrfProtection = csrf();
 // router.use(csrfProtection);
 
-router.get('/profile', isLoggedIn, function(req, res, next){    
+router.get('/profile', isLoggedIn, csrfProtection, function(req, res, next){    
     res.render('admin/profile', {admin:true});
 });
 
-router.get('/products', canListProducts, function(req, res){
+router.get('/products', canListProducts, csrfProtection, function(req, res){
     var messages = req.flash('error');
     Product.find(function(err, docs){
         var productChunks = [];
@@ -23,11 +23,11 @@ router.get('/products', canListProducts, function(req, res){
     });
 });
 
-router.get('/search', canSearch, function(req, res, next){
-    res.render('admin/search', {title:'Search', admin:true});
+router.get('/search', canSearch, csrfProtection, function(req, res, next){
+    res.render('admin/search', {title:'Search', admin:true, csrfToken: req.csrfToken()});
 });
 
-router.post('/search', function(req, res){    
+router.post('/search', csrfProtection, function(req, res){    
     var keyword = req.body.keyword;
     var messages = req.flash('error');
     console.log(keyword);
@@ -56,13 +56,13 @@ router.get('/signin', csrfProtection, function(req, res, next){
     res.render('admin/signin', {title:'Sign In', csrfToken: req.csrfToken(), messages:messages, hasErrors: messages.length > 0, isAdmin:true, admin:true});
 });
 
-router.post('/signin', passport.authenticate('local.admin.signin', {
+router.post('/signin', csrfProtection, passport.authenticate('local.admin.signin', {
     successRedirect: '/admin/profile',
     failureRedirect: '/admin/signin',
     failureFlash: true
 }));
 
-router.post('/update-product', function(req, res){
+router.post('/update-product', csrfProtection, function(req, res){
     var photo = req.body.photo,
         title = req.body.title,
         category = req.body.category,
@@ -82,7 +82,7 @@ router.post('/update-product', function(req, res){
     res.redirect('/admin/products');
 });
 
-router.post('/add-new-product', function(req, res){
+router.post('/add-new-product', csrfProtection, function(req, res){
     var photo = req.body.photo,
         title = req.body.title,
         category = req.body.category,
@@ -100,13 +100,13 @@ router.post('/add-new-product', function(req, res){
     res.redirect('/admin/products');
 });
 
-router.delete('/delete-product/:id', function(req, res){
+router.delete('/delete-product/:id', csrfProtection, function(req, res){
     var id = req.params.id;
     console.log('Deleting Product Id: ' + id);
     res.redirect('/admin/products');
 });
 
-router.get('/logout', function(req, res, next){
+router.get('/logout', csrfProtection, function(req, res, next){
     req.logout();
     res.redirect('/admin/signin');
 });
