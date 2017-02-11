@@ -25,8 +25,7 @@
     {{/each }}
    </div>
 {{/if}}
-<div class="row">    
-
+<div class="row"> 
     <div class="row">
         <div class="small-12 medium-12 large-12 columns">
             <h4>Manage Products</h4>
@@ -98,59 +97,50 @@
         <!-- Close button -->
         <button class="close-button" aria-label="Close menu" type="button" data-close>
           <span aria-hidden="true">&times;</span>
-        </button>
-        
-        <h4 style="text-align:center;margin-top:35px;">Add New Product</h4>
-        
+        </button>        
+        <h4 style="text-align:center;margin-top:35px;">Add New Product</h4>        
         <div class="row">
             <div class="small-12 medium-12 large-12 columns">
                 <form class="new-product-form" method="POST" action="/admin/add-new-product">
                     <div class="input-group">
                         <input class="input-group-field" type="hidden" name="_csrf"  value="{{csrfToken}}" required>
-                    </div>
-                    
+                    </div>                    
                     <div class="input-group">
                         <span class="input-group-label" style="margin:0;">
                             <i class="fi-photo" style="font-size:24px;margin:0;"></i>
                         </span>
                         <input class="input-group-field" type="text" name="photo"  placeholder="Image Path" required>
                     </div>
-
                     <div class="input-group">
                         <span class="input-group-label" style="margin:0;">
                             <i class="fi-annotate" style="font-size:24px;margin:0;"></i>
                         </span>
                         <input class="input-group-field" type="text" name="title"  placeholder="Title" required>
-                    </div>
-                    
+                    </div>                    
                     <div class="input-group">
                         <span class="input-group-label" style="margin:0;">
                             <i class="fi-flag" style="font-size:24px;margin:0;"></i>
                         </span>
                         <input class="input-group-field" type="text" name="category"  placeholder="Category" required>
-                    </div>
-                    
+                    </div>                    
                     <div class="input-group">
                         <span class="input-group-label" style="margin:0;">
                             <i class="fi-list-number" style="font-size:24px;margin:0;"></i>
                         </span>
                         <input class="input-group-field" type="text" name="quantity"  placeholder="Quantity" required>
-                    </div>
-                    
+                    </div>                    
                     <div class="input-group">
                         <span class="input-group-label" style="margin:0;">
                             <i class="fi-comment" style="font-size:24px;margin:0;"></i>
                         </span>
                         <textarea class="input-group-field" type="text" name="description"  placeholder="Description" required></textarea>
-                    </div>
-                    
+                    </div>                    
                     <div class="input-group">
                         <span class="input-group-label" style="margin:0;">
                             <i class="fi-dollar" style="font-size:24px;margin:0;"></i>
                         </span>
                         <input class="input-group-field" type="text" name="price"  placeholder="Price" required>
-                    </div>
-                    
+                    </div>                    
                     <div class="input-group-button">
                         <input type="submit" class="button" value="Submit">
                     </div>
