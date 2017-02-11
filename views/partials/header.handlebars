@@ -29,7 +29,11 @@
                 <a href="/shopping-cart">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     Shopping Cart
-                    <span class="badge">{{session.cart.totalQty}}</span>
+                    {{# if session.cart.totalQty }}
+                        <span class="label">{{session.cart.totalQty}}</span>
+                    {{else}}
+                        <span class="label">0</span>
+                    {{/if}}
                 </a>
             </li>
             <li>
