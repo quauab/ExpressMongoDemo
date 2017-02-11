@@ -1,6 +1,5 @@
 $(document)
-.ready(function(){
-    
+.ready(function(){    
     $('#textInput').on('click', function(){
 		addTextInput();
 	});
