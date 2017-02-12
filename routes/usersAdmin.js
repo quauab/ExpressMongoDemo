@@ -11,7 +11,7 @@ router.get('/profile', isLoggedIn, csrfProtection, function(req, res, next){
     res.render('admin/profile', {admin:true,user:user});
 });
 
-router.get('/products', canListProducts, csrfProtection, function(req, res){
+router.get('/products', isLoggedIn, csrfProtection, function(req, res){
     var messages = req.flash('error');
     Product.find(function(err, docs){
         var productChunks = [];
@@ -19,11 +19,11 @@ router.get('/products', canListProducts, csrfProtection, function(req, res){
         for (var i = 0; i < docs.length; i += chunkSize) {
             productChunks.push(docs.slice(i, i + chunkSize));
         }
-        res.render('admin/products', {title: 'Admin', products:productChunks, hasErrors:messages.length > 0,admin:true});
+        res.render('admin/products', {title: 'Admin', products:productChunks, hasErrors:messages.length > 0,admin:true, csrfToken: req.csrfToken()});
     });
 });
 
-router.get('/search', canSearch, csrfProtection, function(req, res, next){
+router.get('/search', isLoggedIn, csrfProtection, function(req, res, next){
     res.render('admin/search', {title:'Search', admin:true, csrfToken: req.csrfToken()});
 });
 
@@ -49,6 +49,15 @@ router.post('/search', csrfProtection, function(req, res){
         }        
         res.render('admin/search', {title:'Search Results', products:productChunks, hasErrors:messages.length > 0, messages:messages, resultStatus:status, admin:true, hasResults:productChunks.length > 0});
     });
+});
+
+router.get('/logout', csrfProtection, function(req, res, next){
+    req.logout();
+    res.redirect('/admin/signin');
+});
+
+router.use('/', notLoggedIn, function(req, res, next){
+    next();
 });
 
 router.get('/signin', csrfProtection, function(req, res, next){
@@ -118,11 +127,6 @@ router.delete('/delete-product/:id', csrfProtection, function(req, res){
     res.redirect('/admin/products');
 });
 
-router.get('/logout', csrfProtection, function(req, res, next){
-    req.logout();
-    res.redirect('/admin/signin');
-});
-
 module.exports = router;
 
 function isLoggedIn(req, res, next) {
@@ -136,19 +140,5 @@ function notLoggedIn(req, res, next) {
     if (!req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/admin/signin');
-}
-
-function canListProducts(req, res, next) {
-    if (req.isAuthenticated() && req.user.admin) {
-        return next();
-    }
-    res.redirect('/admin/signin');
-}
-
-function canSearch(req, res, next) {
-    if (req.isAuthenticated() && req.user.admin) {
-        return next();
-    }
-    res.redirect('/admin/signin');
+    res.redirect('/');
 }
