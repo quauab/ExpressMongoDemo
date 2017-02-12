@@ -80,7 +80,7 @@ router.post('/contact', function(req, res){
 
 // search view
 router.post('/search-for-item', function(req, res, next){
-    var keyword = req.body.keyword;
+    var keyword = req.body.keyword.substring(0,1).toUpperCase() + req.body.keyword.substring(1);
     var messages = req.flash('error');
     var status = '';
     Product.find({ $or: [ { category: { $eq: keyword } }, { title: keyword } ] },function(err, docs){

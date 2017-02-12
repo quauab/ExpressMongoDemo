@@ -12,14 +12,16 @@ passport.deserializeUser(function(id, done){
     });
 });
 
+//*
 passport.use('local.signup', new LocalStrategy({
     usernameField: 'email',
-    password: 'password',
-    adminField: 'admin',
+    passwordField: 'password',
     passReqToCallback: true
 }, function(req, email, password, done){
+    req.checkBody('fname', 'First name is required').notEmpty();
+    req.checkBody('lname', 'Last name is required').notEmpty();
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();
-    req.checkBody('password', 'Invalid email').notEmpty().isLength({min:4});
+    req.checkBody('password', 'Invalid password length - minimum characters: 4').notEmpty().isLength({min:4});
     
     var errors = req.validationErrors();
     
@@ -37,23 +39,25 @@ passport.use('local.signup', new LocalStrategy({
         }
         
         if (user) {
-            return done(null, false, {message: 'Email is already in use.'});
+            return done(null, false, {message: 'User already exists'});
         }
         
         var newUser = new User();
+        newUser.fname = req.body.fname;
+        newUser.lname = req.body.lname;
         newUser.email = email;
-        newUser.password = newUser.encryptPassword(password);
+        newUser.password = newUser.generateHash(password);
         newUser.admin = req.body.admin;
         newUser.save(function(err, result){
             if (err) {
                 return done(err);
-            }
-            
+            }            
             return done(null, newUser);
         });
     });
-}));
+}));//*/
 
+//*
 passport.use('local.signin', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
@@ -87,7 +91,7 @@ passport.use('local.signin', new LocalStrategy({
         
         return done(null, user);
     });
-}));
+}));//*/
 
 passport.use('local.admin.signin', new LocalStrategy({
     usernameField: 'email',

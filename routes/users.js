@@ -7,7 +7,8 @@ var csrfProtection = csrf();
 router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function(req, res, next){
-    res.render('user/profile',{title:'Profile', admin:false});
+    const user = req.user.fname + '\'s';
+    res.render('user/profile',{title:'Profile', user:user, admin:false});
 });
 
 router.get('/logout', function(req, res, next){
@@ -21,7 +22,7 @@ router.use('/', notLoggedIn, function(req, res, next){
 
 router.get('/signup', function(req, res, next){
     var messages = req.flash('error');
-    res.render('user/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0, isAdmin:false, admin:false});
+    res.render('user/signup', {title:'Registration', csrfToken: req.csrfToken(), messages:messages, hasErrors: messages.length > 0, isAdmin:false, admin:false});
 });
 
 router.post('/signup', passport.authenticate('local.signup', {

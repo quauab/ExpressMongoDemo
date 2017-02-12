@@ -7,7 +7,7 @@ var products = [
     new Product({
         imagePath:'graphics/products/box.png',
         title: 'Box',
-        category: 'Container',
+        category: ['container','containers','contain','contains','containing'],
         quantity: 30,
         description: 'Lorem ipsum dolor sit amet tellus nulla pellentesque integer taciti vehicula inceptos. Cras vitae consequat rhoncus.',
         price: 10
@@ -15,7 +15,7 @@ var products = [
     new Product({
         imagePath:'graphics/products/dragonflies.png',
         title: 'Dragonflies',
-        category: 'Air Freshener',
+        category: ['air freshener','aerosol','air spray','air neutralize','air neutralizer','air neutralizing'],
         quantity: 30,
         description: 'Sit vestibulum adipiscing. Dolor sit a. A duis proin morbi felis per. Egestas platea lorem lacus condimentum proin. Pariatur tortor aenean.',
         price: 12
@@ -23,7 +23,7 @@ var products = [
     new Product({
         imagePath:'graphics/products/mushrooms.png',
         title: 'Mushrooms',
-        category: 'Bathing',
+        category: ['bath','wash','soap','shower','bathroom','bathing room','bathing','washing','showering','bathe'],
         quantity: 30,
         description: 'Per mollis praesent nascetur aliquam. Per mollis praesent nascetur aliquam.',
         price: 15

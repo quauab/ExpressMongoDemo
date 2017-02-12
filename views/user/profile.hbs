@@ -5,4 +5,9 @@
     {{/each }}
    </div>
 {{/if}}
-<h1>User Profile</h1>
+
+{{# if user}}
+    <h4><strong>{{user}} Profile</strong></h4>
+{{else}}
+    <h1>User Profile</h1>
+{{/if}}

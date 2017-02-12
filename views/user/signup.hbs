@@ -1,25 +1,38 @@
 <div class="row">
     <h1>Sign Up</h1>
     {{#if hasErrors}}
-       <div class="alert alert-danger">
+       <div class="callout alert">
         {{# each messages }}
             <p>{{this}}</p>
         {{/each }}
        </div>
     {{/if}}
-    <form action="/user/signup" method="post">
-        <div class="form-group">
-            <label for="email">E-Mail</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-        </div>
-        
-        <input type="hidden" name="admin" value="{{isAdmin}}">
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        <button type="submit" class="button>Sign Up</button>
-    </form>    
+    <div class="small-12 medium-12 large-12 columns">
+        <form action="/user/signup" method="post">   
+            <div class="input-group">
+                <label for="first">First Name</label>
+                <input type="text" id="first" name="fname" class="input-group-field" placeholder="First Name" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="last">Last Name</label>
+                <input type="text" id="last" name="lname" class="input-group-field" placeholder="Last Name" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="email">E-Mail</label>
+                <input type="email" id="email" name="email" class="input-group-field" placeholder="Email" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="input-group-field" placeholder="Password">
+            </div>
+            <div class="input-group-button">
+                <input type="hidden" name="admin" value="{{isAdmin}}">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}"> 
+                <input type="submit" class="button" value="Submit">
+            </div>
+        </form>    
+    </div>
 </div>
