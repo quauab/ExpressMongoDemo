@@ -60,18 +60,7 @@ router.use('/', notLoggedIn, function(req, res, next){
     next();
 });
 
-router.get('/signin', csrfProtection, function(req, res, next){
-    var messages = req.flash('error');
-    res.render('admin/signin', {title:'Sign In', csrfToken: req.csrfToken(), messages:messages, hasErrors: messages.length > 0, isAdmin:true, admin:true});
-});
-
-router.post('/signin', csrfProtection, passport.authenticate('local.admin.signin', {
-    successRedirect: '/admin/profile',
-    failureRedirect: '/admin/signin',
-    failureFlash: true
-}));
-
-/*
+//*
 router.get('/signup', csrfProtection, function(req, res, next){		
     var messages = req.flash('error');		
     res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0, isAdmin:true, admin:true});
@@ -82,6 +71,17 @@ router.post('/signup', csrfProtection, passport.authenticate('local.admin.signup
     failureRedirect: '/admin/signup',		
     failureFlash: true		
 }));//*/
+
+router.get('/signin', csrfProtection, function(req, res, next){
+    var messages = req.flash('error');
+    res.render('admin/signin', {title:'Sign In', csrfToken: req.csrfToken(), messages:messages, hasErrors: messages.length > 0, isAdmin:true, admin:true});
+});
+
+router.post('/signin', csrfProtection, passport.authenticate('local.admin.signin', {
+    successRedirect: '/admin/profile',
+    failureRedirect: '/admin/signin',
+    failureFlash: true
+}));
  
 router.post('/update-product', csrfProtection, function(req, res){
     var photo = req.body.photo,
