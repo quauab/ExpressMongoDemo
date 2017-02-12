@@ -7,8 +7,9 @@ var passport = require('passport');
 var csrfProtection = csrf();
 
 router.get('/profile', isLoggedIn, csrfProtection, function(req, res, next){    
-    const user = req.user.fname + '\'s ';
-    res.render('admin/profile', {admin:true,user:user});
+    const greet = 'Greetings ' + req.user.fname;
+    const user = req.user;
+    res.render('admin/profile', {admin:true,greeting:greet, user:user});
 });
 
 router.get('/products', isLoggedIn, csrfProtection, function(req, res){
