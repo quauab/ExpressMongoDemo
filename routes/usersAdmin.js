@@ -68,7 +68,7 @@ router.get('/signup', csrfProtection, function(req, res, next){
     res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
 });		
 		
-router.post('/signup', passport.authenticate('local.admin.signup', {		
+router.post('/signup', passport.authenticate('local.signup', {		
     successRedirect: '/admin/profile',		
     failureRedirect: '/admin/signup',		
     failureFlash: true		
