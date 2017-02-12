@@ -61,6 +61,19 @@ router.post('/signin', csrfProtection, passport.authenticate('local.admin.signin
     failureFlash: true
 }));
 
+/*
+router.get('/signup', csrfProtection, function(req, res, next){		
+    var messages = req.flash('error');		
+    res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});		
+    next();		
+});		
+		
+router.post('/signup', passport.authenticate('local.admin.signup', {		
+    successRedirect: '/admin/profile',		
+    failureRedirect: '/admin/signup',		
+    failureFlash: true		
+}));*/
+ 
 router.post('/update-product', csrfProtection, function(req, res){
     var photo = req.body.photo,
         title = req.body.title,
