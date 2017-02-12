@@ -12,7 +12,6 @@ passport.deserializeUser(function(id, done){
     });
 });
 
-//*
 passport.use('local.signup', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
@@ -55,9 +54,8 @@ passport.use('local.signup', new LocalStrategy({
             return done(null, newUser);
         });
     });
-}));//*/
+}));
 
-//*
 passport.use('local.signin', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
@@ -91,7 +89,7 @@ passport.use('local.signin', new LocalStrategy({
         
         return done(null, user);
     });
-}));//*/
+}));
 
 passport.use('local.admin.signin', new LocalStrategy({
     usernameField: 'email',
