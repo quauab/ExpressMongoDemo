@@ -111,9 +111,10 @@ router.get('/logout', csrfProtection, function(req, res, next){
 });
 
 module.exports = router;
+const admins = ['quebid@hotmail.com'];
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated() && req.session.passport.user.toString() == '589dca185e2239186885f637') {
+    if (req.isAuthenticated() && admins.findIndex(x => (x == req.user.email)) != -1) {
         return next();
     }
     res.redirect('/admin/profile');
@@ -127,14 +128,14 @@ function notLoggedIn(req, res, next) {
 }
 
 function canListProducts(req, res, next) {
-    if (req.isAuthenticated() && req.session.passport.user.toString() == '589dca185e2239186885f637') {
+    if (req.isAuthenticated() && admins.findIndex(x => (x == req.user.email)) != -1) {
         return next();
     }
     res.redirect('/admin/signin');
 }
 
 function canSearch(req, res, next) {
-    if (req.isAuthenticated() && req.session.passport.user.toString() == '589dca185e2239186885f637') {
+    if (req.isAuthenticated() && admins.findIndex(x => (x == req.user.email)) != -1) {
         return next();
     }
     res.redirect('/admin/signin');
