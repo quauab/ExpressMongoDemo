@@ -7,7 +7,8 @@ var passport = require('passport');
 var csrfProtection = csrf();
 
 router.get('/profile', isLoggedIn, csrfProtection, function(req, res, next){    
-    res.render('admin/profile', {admin:true});
+    const user = req.user.fname + '\'s ';
+    res.render('admin/profile', {admin:true,user:user});
 });
 
 router.get('/products', canListProducts, csrfProtection, function(req, res){
@@ -61,18 +62,17 @@ router.post('/signin', csrfProtection, passport.authenticate('local.admin.signin
     failureFlash: true
 }));
 
-/*
+//*
 router.get('/signup', csrfProtection, function(req, res, next){		
     var messages = req.flash('error');		
-    res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});		
-    next();		
+    res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
 });		
 		
 router.post('/signup', passport.authenticate('local.admin.signup', {		
     successRedirect: '/admin/profile',		
     failureRedirect: '/admin/signup',		
     failureFlash: true		
-}));*/
+}));//*/
  
 router.post('/update-product', csrfProtection, function(req, res){
     var photo = req.body.photo,
@@ -124,7 +124,7 @@ router.get('/logout', csrfProtection, function(req, res, next){
 });
 
 module.exports = router;
-const admins = ['quebid@hotmail.com'];
+const admins = ['quebid@hotmail.com','ric@gmail.com'];
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated() && admins.findIndex(x => (x == req.user.email)) != -1) {
