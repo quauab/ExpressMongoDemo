@@ -62,13 +62,13 @@ router.post('/signin', csrfProtection, passport.authenticate('local.admin.signin
     failureFlash: true
 }));
 
-//*
+/*
 router.get('/signup', csrfProtection, function(req, res, next){		
     var messages = req.flash('error');		
     res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0, isAdmin:true, admin:true});
 });		
 		
-router.post('/signup', passport.authenticate('local.signup', {		
+router.post('/signup', csrfProtection, passport.authenticate('local.admin.signup', {		
     successRedirect: '/admin/profile',		
     failureRedirect: '/admin/signup',		
     failureFlash: true		
@@ -124,10 +124,9 @@ router.get('/logout', csrfProtection, function(req, res, next){
 });
 
 module.exports = router;
-const admins = ['quebid@hotmail.com','quobod@gmail.com'];
 
 function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated() && admins.findIndex(x => (x == req.user.email)) != -1) {
+    if (req.isAuthenticated() && req.user.admin) {
         return next();
     }
     res.redirect('/admin/profile');
@@ -141,14 +140,14 @@ function notLoggedIn(req, res, next) {
 }
 
 function canListProducts(req, res, next) {
-    if (req.isAuthenticated() && admins.findIndex(x => (x == req.user.email)) != -1) {
+    if (req.isAuthenticated() && req.user.admin) {
         return next();
     }
     res.redirect('/admin/signin');
 }
 
 function canSearch(req, res, next) {
-    if (req.isAuthenticated() && admins.findIndex(x => (x == req.user.email)) != -1) {
+    if (req.isAuthenticated() && req.user.admin) {
         return next();
     }
     res.redirect('/admin/signin');
