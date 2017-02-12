@@ -26,7 +26,11 @@
 
 <div class="row">
     <div class="small-12 medium-12 large-12 columns">
-        <h4>{{user}} Profile</h4>
+        {{# if user}}
+            <h4><strong>{{user}} Profile</strong></h4>
+        {{else}}
+            <h1>User Profile</h1>
+        {{/if}}
     </div>
 </div>
    

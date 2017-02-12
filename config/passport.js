@@ -94,7 +94,6 @@ passport.use('local.signin', new LocalStrategy({
 passport.use('local.admin.signin', new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
-    adminField: 'admin',
     passReqToCallback: true
 }, function(req, email, password, done){
     req.checkBody('email', 'Invalid email').notEmpty().isEmail();

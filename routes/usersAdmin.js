@@ -124,7 +124,7 @@ router.get('/logout', csrfProtection, function(req, res, next){
 });
 
 module.exports = router;
-const admins = ['quebid@hotmail.com','ric@gmail.com'];
+const admins = ['quebid@hotmail.com','quobod@gmail.com'];
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated() && admins.findIndex(x => (x == req.user.email)) != -1) {
