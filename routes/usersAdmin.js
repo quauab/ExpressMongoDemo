@@ -65,7 +65,7 @@ router.post('/signin', csrfProtection, passport.authenticate('local.admin.signin
 //*
 router.get('/signup', csrfProtection, function(req, res, next){		
     var messages = req.flash('error');		
-    res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0,admin:true});
+    res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0, isAdmin:true, admin:true});
 });		
 		
 router.post('/signup', passport.authenticate('local.signup', {		
