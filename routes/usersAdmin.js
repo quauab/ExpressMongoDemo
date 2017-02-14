@@ -61,7 +61,7 @@ router.use('/', notLoggedIn, function(req, res, next){
     next();
 });
 
-//*
+/*
 router.get('/signup', csrfProtection, function(req, res, next){		
     var messages = req.flash('error');		
     res.render('admin/signup', {title:'Registration', csrfToken: req.csrfToken(),messages:messages, hasErrors: messages.length > 0, isAdmin:true, admin:true});

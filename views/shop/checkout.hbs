@@ -2,7 +2,10 @@
     <div class="small-12 medium-12 large-12 columns">
         <h1>Checkout</h1>
         <h4>Your Total: ${{total}}</h4>
-        <div id="charge-error" class="label alert hidden"></div>
+        <div id="charge-error" class="label alert  {{#if noErrors}}hidden{{/if}}">
+            {{errMsg}}
+        </div>
+        
         <form action="/checkout" method="post" id="checkout-form">
             <div class="row">
                 <div class="small-12 medium-12 large-12 columns">
